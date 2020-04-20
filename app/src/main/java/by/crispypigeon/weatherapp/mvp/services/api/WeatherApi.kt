@@ -9,9 +9,11 @@ import com.android.volley.toolbox.Volley
 
 class WeatherApi {
     //Administrative strings
-    val scheme = "https"
-    val baseUrl = "api.openweathermap.org/data/2.5/"
-    val forecastKey = "forecast"
+    private val scheme = "https"
+    private val baseUrl = "api.openweathermap.org"
+    private val department = "data"
+    private val version = "2.5"
+    private val forecastKey = "forecast"
 
     //API Keys
     private val appIdKey = "appId"
@@ -24,16 +26,16 @@ class WeatherApi {
         context: Context,
         listener: Response.Listener<WeatherResponse>,
         appId: String,
-        lat: Double,
-        lon: Double,
+        lat: String,
+        lon: String,
         units: String,
         lang: String
     ) {
         val queue = Volley.newRequestQueue(context)
         val keysMap = mapOf<String, String>(
             appIdKey to appId,
-            latKey to lat.toString(),
-            lonKey to lon.toString(),
+            latKey to lat,
+            lonKey to lon,
             unitsKey to units,
             langKey to lang
         )
@@ -49,10 +51,12 @@ class WeatherApi {
         queue.add(request)
     }
 
-    fun GetFullUrl(path: String, keys: Map<String, String>): String {
+   private fun GetFullUrl(path: String, keys: Map<String, String>): String {
         val builder = Uri.Builder()
         builder.scheme(scheme)
             .authority(baseUrl)
+            .appendPath(department)
+            .appendPath(version)
             .appendPath(path)
         for (key in keys) {
             builder.appendQueryParameter(key.key, key.value)
