@@ -1,5 +1,7 @@
 package by.crispypigeon.weatherapp.mvp.main.view
 
+import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
+
 interface IMainView {
     fun ShowCurrentWeather(
         countryIndex: String,
@@ -9,4 +11,6 @@ interface IMainView {
         condition: String,
         time: String
     )
+
+    fun ShowForecasts(forecasts: List<WeatherItem>)
 }

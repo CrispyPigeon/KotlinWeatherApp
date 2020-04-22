@@ -5,37 +5,26 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.crispypigeon.weatherapp.R
+import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
 import by.crispypigeon.weatherapp.mvp.main.model.MainModel
 import by.crispypigeon.weatherapp.mvp.main.presenter.MainPresenter
 import by.crispypigeon.weatherapp.mvp.services.api.GsonRequest
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), IMainView {
     lateinit var presenter: MainPresenter
 
-    //controls
-    private lateinit var countryIndexTextView : TextView
-    private lateinit var temperatureTextView : TextView
-    private lateinit var latTextView : TextView
-    private lateinit var lonTextView : TextView
-    private lateinit var conditionTextView : TextView
-    private lateinit var timeTextView : TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        countryIndexTextView = findViewById<TextView>(R.id.countryIndexTextView)
-        temperatureTextView = findViewById<TextView>(R.id.temperatureTextView)
-        latTextView = findViewById<TextView>(R.id.latitudeTextView)
-        lonTextView = findViewById<TextView>(R.id.lontitudeTextView)
-        conditionTextView = findViewById<TextView>(R.id.conditionTextView)
-        timeTextView = findViewById<TextView>(R.id.timeTextView)
-
         presenter = MainPresenter(this)
+
     }
 
     override fun ShowCurrentWeather(
@@ -48,11 +37,15 @@ class MainActivity : AppCompatActivity(), IMainView {
     ) {
         countryIndexTextView.setText(countryIndex)
         temperatureTextView.setText(temperature.toString())
-        latTextView.setText(lat.toString())
-        lonTextView.setText(lon.toString())
+        latitudeTextView.setText(lat.toString())
+        lontitudeTextView.setText(lon.toString())
         conditionTextView.setText(condition)
         timeTextView.setText(time)
     }
 
-
+    override fun ShowForecasts(forecasts: List<WeatherItem>) {
+        forecastRecyclerView.adapter = WeatherAdapter(forecasts)
+        forecastRecyclerView.layoutManager = LinearLayoutManager(this)
+        forecastRecyclerView.setHasFixedSize(true)
+    }
 }
