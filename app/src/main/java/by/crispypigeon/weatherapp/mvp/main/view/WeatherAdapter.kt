@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.crispypigeon.weatherapp.R
 import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.forecast_template_item.view.*
 
 class WeatherAdapter(private val items: List<WeatherItem>) : RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
