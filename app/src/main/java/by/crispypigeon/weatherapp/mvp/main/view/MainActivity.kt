@@ -42,10 +42,11 @@ class MainActivity : AppCompatActivity(), IMainView {
         forecastRecyclerView.setHasFixedSize(true)
     }
 
-
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         GeoLocationService.INSTANCE?.permissionRequestUpdated(requestCode, grantResults)
     }
 }
