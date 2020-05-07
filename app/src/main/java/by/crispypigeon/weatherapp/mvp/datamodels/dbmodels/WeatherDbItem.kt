@@ -1,13 +1,16 @@
 package by.crispypigeon.weatherapp.mvp.datamodels.dbmodels
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class WeatherDbItem(
-    var id: Int? = null,
-    var countryIndex: String? = null,
-    var temperature: Double? = null,
-    var lon: Double? = null,
-    var lat: Double? = null,
-    var condition: String? = null,
-    var time: String? = null
+    @PrimaryKey
+    var id: Int = 0,
+
+    var temperature: Double = 0.0,
+    var condition: String = String(),
+    var time: Date = Date(),
+
+    var city: CityDbItem? = null
 ) : RealmObject()

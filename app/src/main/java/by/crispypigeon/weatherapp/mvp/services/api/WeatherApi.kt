@@ -1,6 +1,6 @@
 package by.crispypigeon.weatherapp.mvp.services.api
 
-import WeatherResponse
+import by.crispypigeon.weatherapp.mvp.datamodels.apimodels.WeatherResponse
 import android.content.Context
 import android.net.Uri
 import com.android.volley.Response

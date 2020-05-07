@@ -28,8 +28,8 @@ class GeoLocationService(val activity: Activity) {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
     }
 
-    fun setListener(clistener: LocationListener){
-        listener = clistener
+    fun setListener(currlistener: LocationListener){
+        listener = currlistener
     }
 
     fun permissionRequestUpdated(requestCode : Int, grantResults: IntArray) {

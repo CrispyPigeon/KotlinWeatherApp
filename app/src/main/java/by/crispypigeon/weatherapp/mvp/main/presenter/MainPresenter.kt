@@ -1,14 +1,17 @@
 package by.crispypigeon.weatherapp.mvp.main.presenter
 
-import WeatherResponse
+import by.crispypigeon.weatherapp.mvp.datamodels.apimodels.WeatherResponse
 import android.app.Activity
-import android.content.Context
-import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
 import by.crispypigeon.weatherapp.mvp.main.model.MainModel
 import by.crispypigeon.weatherapp.mvp.main.view.IMainView
 import com.android.volley.Response
 
+//TODO *1 showing 24h weather *2 if forecasts exists in db show from db
 class MainPresenter {
+    private val appId = "0160dc60ff74dfca79aa310ee187d61e"
+    private val unit = "metric"
+    private val lang = "ru"
+
     var model: MainModel
     var view: IMainView
 
@@ -20,34 +23,28 @@ class MainPresenter {
     }
 
     private fun getWeather() {
-        model.GetWeather(
-            view as Context,
+        model.clearDbItems()
+        model.getWeather(
             Response.Listener<WeatherResponse> { response -> weatherListener(response) },
-            "0160dc60ff74dfca79aa310ee187d61e",
-            "metric",
-            "ru"
+            appId,
+            unit,
+            lang
         )
     }
 
     fun weatherListener(response: WeatherResponse) {
+        model.saveWeatherItemsToDb(response)
+        val firstItem = model.getFirstWeatherDbItem()
         view.ShowCurrentWeather(
-            response.city.country,
-            response.list[0].main.temp,
-            response.city.coord.lon,
-            response.city.coord.lat,
-            response.list[0].weather[0].description,
-            response.list[0].dt_txt
+            firstItem.city!!.index,
+            firstItem.temperature,
+            firstItem.city!!.lontitude,
+            firstItem.city!!.latitude,
+            firstItem.condition,
+            firstItem.time.toString()
         )
 
-        val forecasts = ArrayList<WeatherItem>()
-        for (item in response.list) {
-            forecasts.add(
-                WeatherItem(
-                    item.main.temp.toString(), item.dt_txt,
-                    item.weather.first().description
-                )
-            )
-        }
+        val forecasts = model.getAllWeatherDbItems()
         view.ShowForecasts(forecasts)
     }
 }

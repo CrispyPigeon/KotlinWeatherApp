@@ -1,5 +1,6 @@
 package by.crispypigeon.weatherapp.mvp.main.view
 
+import by.crispypigeon.weatherapp.mvp.datamodels.dbmodels.WeatherDbItem
 import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
 
 interface IMainView {
@@ -12,5 +13,5 @@ interface IMainView {
         time: String
     )
 
-    fun ShowForecasts(forecasts: List<WeatherItem>)
+    fun ShowForecasts(forecasts: List<WeatherDbItem>)
 }

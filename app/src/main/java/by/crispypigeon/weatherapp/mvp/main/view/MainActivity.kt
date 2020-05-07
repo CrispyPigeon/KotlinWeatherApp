@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.crispypigeon.weatherapp.R
+import by.crispypigeon.weatherapp.mvp.datamodels.dbmodels.WeatherDbItem
 import by.crispypigeon.weatherapp.mvp.datamodels.resultmodels.WeatherItem
 import by.crispypigeon.weatherapp.mvp.main.presenter.MainPresenter
 import by.crispypigeon.weatherapp.mvp.services.geolocation.GeoLocationService
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), IMainView {
         timeTextView.setText(time)
     }
 
-    override fun ShowForecasts(forecasts: List<WeatherItem>) {
+    override fun ShowForecasts(forecasts: List<WeatherDbItem>) {
         forecastRecyclerView.adapter = WeatherAdapter(forecasts)
         forecastRecyclerView.layoutManager = LinearLayoutManager(this)
         forecastRecyclerView.setHasFixedSize(true)
